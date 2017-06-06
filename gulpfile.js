@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 
 var src = './process',
     dest = './app'
-    environment = 'production';
+    environment = 'development';
 
 gulp.task('generate-service-worker', function(callback) {
   swPrecache.write(path.join(dest, 'service-worker.js'), {
@@ -25,7 +25,7 @@ gulp.task('generate-service-worker', function(callback) {
 gulp.task('js', function() {
   return gulp.src(src + '/js/app.js')
     .pipe(browserify())
-    .pipe(gulpif(environment === 'production', uglify()))
+    .pipe(gulpif(environment === 'development', uglify()))
     .on('error', function (err) {
       console.error('Error!', err.message);
     })
@@ -38,7 +38,7 @@ gulp.task('html', function() {
 gulp.task('css', function() {
   gulp.src( src + '/css/app.css')
     .pipe(concatCss('app.css', { rebaseUrls: false }))
-    .pipe(gulpif(environment === 'production', cleanCSS()))
+    .pipe(gulpif(environment === 'development', cleanCSS()))
   .pipe(gulp.dest(dest + '/css'));
 });
 
